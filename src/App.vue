@@ -1,28 +1,51 @@
 <template>
   <div id="app">
-    <img alt="Vue logo" src="./assets/logo.png">
-    <HelloWorld msg="Welcome to Your Vue.js App"/>
+    <CardList :data="data" />
   </div>
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld.vue';
+import axios from 'axios';
+import CardList from '@/components/CardList.vue';
 
 export default {
   name: 'App',
+  data() {
+    return {
+      data: [],
+      errors: [],
+    };
+  },
+  created() {
+    axios
+      .get('https://api.jsonbin.io/b/5ff1946009f7c73f1b6d134f')
+      .then((resp) => resp.data)
+      .then((data) => {
+        this.data = data;
+      });
+  },
+  methods: {
+    // sortByRating() {
+    //   this.data.sort((a, b) =>
+    // (a.restaurant.categories.rating > b.restaurant.categories.rating ? 1 : -1));
+    // },
+  },
   components: {
-    HelloWorld,
+    CardList,
   },
 };
 </script>
 
 <style lang="scss">
+@import url('https://fonts.googleapis.com/css2?family=Rubik&display=swap');
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'Rubik', sans-serif;
+}
+
 #app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
 }
 </style>
