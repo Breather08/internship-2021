@@ -1,5 +1,8 @@
 <template>
-  <div class="card-item">
+  <div
+    :class="{ 'card-item': true, active: info.restaurant.state === 'active' }"
+    v-on:click="onClick"
+  >
     <div class="img-container">
       <div class="logo-container">
         <img :src="info.restaurant.logo" alt="" />
@@ -28,21 +31,19 @@
       >
     </div>
     <div class="categories">
-      <span>{{ getCategories() }}</span>
+      <span v-for="(cat, i) in getCategories()" :key="i">{{ cat }}</span>
     </div>
     <div class="delivery">
       <div class="deliveryCost">
         <IconifyIcon :icon="icons.mopedIcon" :style="{ color: '#9B9B9B', fontSize: '40px' }" />
         <span
-          ><b>от {{ info.delivery_tariff.conditions[0].delivery_cost }}</b
-          >тг</span
+          ><b>от {{ info.delivery_tariff.conditions[0].delivery_cost }}</b> тг</span
         >
       </div>
       <div class="orderCost">
         <IconifyIcon :icon="icons.tengeIcon" :style="{ color: '#9B9B9B', fontSize: '20px' }" />
         <span
-          ><b>{{ info.delivery_tariff.conditions[0].order_min_cost }}</b
-          >тг</span
+          ><b>{{ info.delivery_tariff.conditions[0].order_min_cost }}</b> тг</span
         >
       </div>
     </div>
@@ -63,6 +64,9 @@ export default {
         mopedIcon,
         tengeIcon,
       },
+      mainClass: {
+        info: this.info,
+      },
     };
   },
   components: {
@@ -79,13 +83,16 @@ export default {
       return Math.round(this.info.restaurant.rating * 0.05 * 10) / 10;
     },
     getCategories() {
-      return this.info.restaurant.categories.map((cat) => cat.title).join(' ');
+      return this.info.restaurant.categories.map((cat) => cat.title);
+    },
+    onClick(e) {
+      console.log(e.target);
     },
   },
 };
 </script>
 
-<style lang="scss">
+<style scoped lang="scss">
 .card-item {
   width: 400px;
   height: 380px;
@@ -95,6 +102,7 @@ export default {
   flex-direction: column;
   border-bottom: 2px solid #e8e8e8;
   transform: scale(0.8);
+
   .img-container {
     position: relative;
     width: 100%;
@@ -152,9 +160,13 @@ export default {
   }
   .categories {
     color: #aeaeae;
+    span {
+      margin-right: 15px;
+    }
   }
   .delivery {
-    margin-top: 20px;
+    position: absolute;
+    bottom: 1%;
     width: 280px;
     display: flex;
     justify-content: space-between;
@@ -166,7 +178,7 @@ export default {
       width: 50%;
       height: 100%;
       display: flex;
-      justify-content: start;
+      justify-content: flex-start;
       align-items: center;
       span {
         margin: 10px;
@@ -175,6 +187,9 @@ export default {
     .orderCost {
       justify-content: end;
     }
+  }
+  .active {
+    filter: grayscale(100%);
   }
 }
 </style>

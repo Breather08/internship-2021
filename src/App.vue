@@ -5,8 +5,8 @@
 </template>
 
 <script>
-import axios from 'axios';
 import CardList from '@/components/CardList.vue';
+import fetchData from '@/requests/fetchData';
 
 export default {
   name: 'App',
@@ -16,20 +16,19 @@ export default {
       errors: [],
     };
   },
+  beforeMount() {
+    console.log('not mounted yet');
+  },
+  mounted() {
+    console.log('mounted');
+  },
   created() {
-    axios
-      .get('https://api.jsonbin.io/b/5ff1946009f7c73f1b6d134f')
-      .then((resp) => resp.data)
-      .then((data) => {
-        this.data = data;
-      });
+    fetchData(this.data, this.errors);
+    this.errors.forEach((err) => {
+      throw err;
+    });
   },
-  methods: {
-    // sortByRating() {
-    //   this.data.sort((a, b) =>
-    // (a.restaurant.categories.rating > b.restaurant.categories.rating ? 1 : -1));
-    // },
-  },
+  methods: {},
   components: {
     CardList,
   },

@@ -24,5 +24,8 @@ export default {
 <style scoped lang="scss">
 .card-list {
   width: 100vw;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(400px, 400px));
+  justify-content: center;
 }
 </style>
