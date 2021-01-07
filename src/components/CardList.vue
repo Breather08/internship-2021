@@ -26,6 +26,9 @@ export default {
   width: 100vw;
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(400px, 400px));
+  grid-gap: 10px;
   justify-content: center;
+  align-items: center;
+  padding: 20px;
 }
 </style>

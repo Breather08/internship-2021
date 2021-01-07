@@ -6,7 +6,7 @@
 
 <script>
 import CardList from '@/components/CardList.vue';
-import fetchData from '@/requests/fetchData';
+import fetchData from '@/requests/fetchRestaurantData';
 
 export default {
   name: 'App',
@@ -16,14 +16,9 @@ export default {
       errors: [],
     };
   },
-  beforeMount() {
-    console.log('not mounted yet');
-  },
-  mounted() {
-    console.log('mounted');
-  },
   created() {
     fetchData(this.data, this.errors);
+    console.log(this.errors);
     this.errors.forEach((err) => {
       throw err;
     });
